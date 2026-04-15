@@ -6,7 +6,7 @@ interface UserPreferences {
   customGoal: string;
 }
 
-const STORAGE_KEY = "fitquest-user-prefs";
+const STORAGE_KEY = "growin-user-prefs";
 
 const defaults: UserPreferences = {
   sports: [],
