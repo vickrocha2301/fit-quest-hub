@@ -25,7 +25,7 @@ export default function Onboarding() {
             <motion.div animate={{ scale: [1, 1.1, 1] }} transition={{ repeat: Infinity, duration: 2 }} className="w-20 h-20 rounded-2xl gradient-primary flex items-center justify-center mx-auto mb-6">
               <Zap className="w-10 h-10 text-primary-foreground" />
             </motion.div>
-            <h1 className="text-3xl font-heading font-bold mb-2 text-glow">FitQuest</h1>
+            <h1 className="text-3xl font-heading font-bold mb-2 text-glow">Growin</h1>
             <p className="text-muted-foreground mb-8">Transforme treinos em aventuras. Ganhe XP, conquiste badges e desafie amigos!</p>
             <Button onClick={() => setStep("sports")} className="w-full h-14 gradient-primary text-primary-foreground font-heading font-bold rounded-xl border-0 mb-3">
               Começar Agora <ArrowRight className="w-5 h-5 ml-2" />
