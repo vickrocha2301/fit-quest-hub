@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
 import { XPBar } from "@/components/XPBar";
-import { Settings, Award, MapPin, Timer, Flame } from "lucide-react";
+import { SportSelector } from "@/components/SportSelector";
+import { GoalSelector } from "@/components/GoalSelector";
+import { useUserPreferences } from "@/hooks/useUserPreferences";
+import { Settings, Award, MapPin, Timer, Flame, Dumbbell, Target } from "lucide-react";
 
 const stats = [
   { icon: Flame, label: "Treinos", value: "142" },
@@ -9,7 +12,27 @@ const stats = [
   { icon: Award, label: "Badges", value: "12" },
 ];
 
+const sportLabels: Record<string, string> = {
+  academia: "Academia",
+  corrida: "Corrida",
+  maratona: "Maratona",
+  "muay-thai": "Muay Thai",
+  "jiu-jitsu": "Jiu-Jitsu",
+  "outras-lutas": "Outras Lutas",
+};
+
+const goalLabels: Record<string, string> = {
+  emagrecer: "Emagrecer",
+  massa: "Ganhar massa",
+  condicionamento: "Condicionamento",
+  competir: "Competir",
+  saude: "Manter saúde",
+};
+
 export default function Profile() {
+  const { sports, goals, customGoal, setSports, setGoals, setCustomGoal } =
+    useUserPreferences();
+
   return (
     <div className="min-h-screen pb-20 px-4 pt-6 max-w-lg mx-auto">
       <div className="flex items-center justify-between mb-6">
@@ -30,6 +53,23 @@ export default function Profile() {
         </div>
         <h2 className="text-lg font-heading font-bold">Atleta</h2>
         <p className="text-sm text-muted-foreground">Corredor • Desde Jan 2024</p>
+
+        {/* Tags resumo */}
+        {(sports.length > 0 || goals.length > 0) && (
+          <div className="flex flex-wrap gap-1.5 mt-3 justify-center">
+            {sports.map((s) => (
+              <span key={s} className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-primary/15 text-primary border border-primary/20">
+                {sportLabels[s] ?? s}
+              </span>
+            ))}
+            {goals.map((g) => (
+              <span key={g} className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-accent/15 text-accent-foreground border border-accent/20">
+                {goalLabels[g] ?? g}
+              </span>
+            ))}
+          </div>
+        )}
+
         <div className="w-full max-w-xs mt-3">
           <XPBar current={720} max={1000} level={12} />
         </div>
@@ -51,6 +91,39 @@ export default function Profile() {
           </motion.div>
         ))}
       </div>
+
+      {/* Modalidades */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+        className="bg-card rounded-xl p-4 border border-border mb-4"
+      >
+        <div className="flex items-center gap-2 mb-3">
+          <Dumbbell className="w-4 h-4 text-primary" />
+          <h3 className="text-sm font-heading font-semibold">Minhas Modalidades</h3>
+        </div>
+        <SportSelector selected={sports} onChange={setSports} />
+      </motion.div>
+
+      {/* Objetivo */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="bg-card rounded-xl p-4 border border-border mb-4"
+      >
+        <div className="flex items-center gap-2 mb-3">
+          <Target className="w-4 h-4 text-primary" />
+          <h3 className="text-sm font-heading font-semibold">Meu Objetivo</h3>
+        </div>
+        <GoalSelector
+          selectedGoals={goals}
+          customGoal={customGoal}
+          onGoalsChange={setGoals}
+          onCustomGoalChange={setCustomGoal}
+        />
+      </motion.div>
 
       {/* Records */}
       <div className="bg-card rounded-xl p-4 border border-border">
