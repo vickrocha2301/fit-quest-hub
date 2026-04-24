@@ -1,10 +1,10 @@
-import { Home, Map, Trophy, Users, User } from "lucide-react";
+import { Home, Map, ListChecks, Users, User } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 const tabs = [
   { to: "/", icon: Home, label: "Home" },
   { to: "/journey", icon: Map, label: "Jornada" },
-  { to: "/achievements", icon: Trophy, label: "Conquistas" },
+  { to: "/habits", icon: ListChecks, label: "Hábitos" },
   { to: "/social", icon: Users, label: "Social" },
   { to: "/profile", icon: User, label: "Perfil" },
 ];
