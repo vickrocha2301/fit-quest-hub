@@ -74,10 +74,10 @@ export default function Home() {
       {/* Header */}
       <motion.div variants={item} className="flex items-center gap-3 mb-4">
         <div className="w-12 h-12 rounded-full gradient-primary flex items-center justify-center text-primary-foreground font-heading font-bold text-lg">
-          S
+          A
         </div>
         <div className="flex-1">
-          <h1 className="text-lg font-heading font-bold">Olá, Sarah! 💪</h1>
+          <h1 className="text-lg font-heading font-bold">Olá, Atleta! 💪</h1>
           <XPBar current={720} max={1000} level={12} />
         </div>
       </motion.div>
@@ -111,7 +111,7 @@ export default function Home() {
                 que o habitual. Que tal uma meditação de 5 minutos agora para reequilibrar?
               </p>
               <button
-                onClick={() => openRegister("mood")}
+                onClick={() => openRegister("health")}
                 className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-primary hover:text-primary/80"
               >
                 Como você está? <ChevronRight className="w-3 h-3" />
@@ -221,7 +221,7 @@ export default function Home() {
             <span className="text-sm font-heading font-semibold">Registrar Sono</span>
           </button>
           <button
-            onClick={() => openRegister("mood")}
+            onClick={() => openRegister("health")}
             className="flex items-center justify-center gap-2 h-12 rounded-xl border border-border bg-card hover:border-gold/50 hover:bg-gold/5 transition-all group"
           >
             <Smile className="w-4 h-4 text-gold group-hover:drop-shadow-[0_0_6px_hsl(var(--gold)/0.7)]" />
