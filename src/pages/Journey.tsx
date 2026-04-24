@@ -11,6 +11,18 @@ import {
 } from "@/components/ui/dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
+const BADGES = [
+  { name: "Primeiro Passo", icon: "👟", unlocked: true, description: "Complete sua primeira atividade" },
+  { name: "Maratonista", icon: "🏅", unlocked: true, description: "Corra 42km no total" },
+  { name: "Streak Master", icon: "🔥", unlocked: true, description: "7 dias seguidos de treino" },
+  { name: "Velocista", icon: "⚡", unlocked: true, description: "Corra 1km em menos de 5min" },
+  { name: "Explorador", icon: "🗺️", unlocked: true, description: "Treine em 5 locais diferentes" },
+  { name: "Ciclista", icon: "🚴", unlocked: false, description: "Pedale 100km" },
+  { name: "Noturno", icon: "🌙", unlocked: false, description: "Treine depois das 22h" },
+  { name: "Social", icon: "👥", unlocked: false, description: "Adicione 10 amigos" },
+  { name: "Lendário", icon: "🏆", unlocked: false, description: "Alcance o nível 50" },
+];
+
 type NodeStatus = "completed" | "current" | "locked";
 
 interface JourneyNode {
@@ -82,9 +94,11 @@ function buildPath() {
 export default function Journey() {
   const [mode, setMode] = useState<"solo" | "friends">("solo");
   const [selected, setSelected] = useState<JourneyNode | null>(null);
+  const [achievementsOpen, setAchievementsOpen] = useState(false);
 
   const path = useMemo(() => buildPath(), []);
   const positions = useMemo(() => NODES.map((_, i) => getNodePosition(i)), []);
+  const unlockedCount = BADGES.filter((b) => b.unlocked).length;
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-background pb-24">
