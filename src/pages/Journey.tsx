@@ -181,6 +181,27 @@ export default function Journey() {
         </div>
       </header>
 
+      {/* Floating Trophy Button */}
+      <motion.button
+        onClick={() => setAchievementsOpen(true)}
+        initial={{ opacity: 0, scale: 0.6 }}
+        animate={{ opacity: 1, scale: 1 }}
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.92 }}
+        aria-label="Minhas Conquistas"
+        className="fixed top-20 right-4 z-30 w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-br from-gold to-streak shadow-[0_0_24px_hsl(var(--gold)/0.6)] border border-gold/40"
+      >
+        <motion.span
+          className="absolute inset-0 rounded-full bg-gold/30"
+          animate={{ scale: [1, 1.4], opacity: [0.5, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
+        />
+        <Trophy className="w-5 h-5 text-background relative z-10" strokeWidth={2.5} />
+        <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-primary text-primary-foreground text-[10px] font-heading font-bold flex items-center justify-center border border-background z-10">
+          {unlockedCount}
+        </span>
+      </motion.button>
+
       {/* Trail */}
       <main className="relative z-10 max-w-lg mx-auto px-4 pt-6">
         <div className="relative w-full" style={{ aspectRatio: `${VIEW_W} / ${VIEW_H}` }}>
