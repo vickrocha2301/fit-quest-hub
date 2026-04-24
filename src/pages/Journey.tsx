@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Check, Lock, Play, Users, User, Sparkles, X, Flame, Trophy } from "lucide-react";
+import { motion } from "framer-motion";
+import { Check, Lock, Play, Users, User, Sparkles, Flame, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,18 +10,8 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
-const BADGES = [
-  { name: "Primeiro Passo", icon: "👟", unlocked: true, description: "Complete sua primeira atividade" },
-  { name: "Maratonista", icon: "🏅", unlocked: true, description: "Corra 42km no total" },
-  { name: "Streak Master", icon: "🔥", unlocked: true, description: "7 dias seguidos de treino" },
-  { name: "Velocista", icon: "⚡", unlocked: true, description: "Corra 1km em menos de 5min" },
-  { name: "Explorador", icon: "🗺️", unlocked: true, description: "Treine em 5 locais diferentes" },
-  { name: "Ciclista", icon: "🚴", unlocked: false, description: "Pedale 100km" },
-  { name: "Noturno", icon: "🌙", unlocked: false, description: "Treine depois das 22h" },
-  { name: "Social", icon: "👥", unlocked: false, description: "Adicione 10 amigos" },
-  { name: "Lendário", icon: "🏆", unlocked: false, description: "Alcance o nível 50" },
-];
+import { AchievementsModal } from "@/components/AchievementsModal";
+import { BADGES } from "@/data/badges";
 
 type NodeStatus = "completed" | "current" | "locked";
 
@@ -385,56 +375,8 @@ export default function Journey() {
         </DialogContent>
       </Dialog>
 
-      {/* Achievements Modal — Glassmorphism */}
-      <Dialog open={achievementsOpen} onOpenChange={setAchievementsOpen}>
-        <DialogContent className="max-w-md border-white/10 bg-background/40 backdrop-blur-2xl shadow-[0_0_60px_hsl(var(--accent)/0.3)]">
-          <DialogHeader>
-            <DialogTitle className="font-heading text-xl flex items-center gap-2">
-              <Trophy className="w-5 h-5 text-gold drop-shadow-[0_0_8px_hsl(var(--gold)/0.7)]" />
-              Minhas Conquistas
-            </DialogTitle>
-            <DialogDescription>
-              {unlockedCount} de {BADGES.length} medalhas desbloqueadas
-            </DialogDescription>
-          </DialogHeader>
-
-          <div className="grid grid-cols-3 gap-3 mt-2 max-h-[60vh] overflow-y-auto pr-1">
-            {BADGES.map((b, i) => (
-              <motion.div
-                key={b.name}
-                initial={{ opacity: 0, scale: 0.85 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: i * 0.04 }}
-                className={`relative aspect-square rounded-xl flex flex-col items-center justify-center p-2 border transition-all ${
-                  b.unlocked
-                    ? "bg-gradient-to-br from-primary/20 to-accent/20 border-primary/40 shadow-[0_0_16px_hsl(var(--primary)/0.3)]"
-                    : "bg-secondary/30 border-border"
-                }`}
-              >
-                <span
-                  className={`text-3xl mb-1 transition-all ${
-                    b.unlocked ? "" : "grayscale opacity-40"
-                  }`}
-                >
-                  {b.icon}
-                </span>
-                <span
-                  className={`text-[10px] font-heading font-semibold text-center leading-tight ${
-                    b.unlocked ? "text-foreground" : "text-muted-foreground"
-                  }`}
-                >
-                  {b.name}
-                </span>
-                {!b.unlocked && (
-                  <span className="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-background/70 backdrop-blur flex items-center justify-center border border-border">
-                    <Lock className="w-2.5 h-2.5 text-muted-foreground" />
-                  </span>
-                )}
-              </motion.div>
-            ))}
-          </div>
-        </DialogContent>
-      </Dialog>
+      {/* Achievements Modal — Glassmorphism (shared) */}
+      <AchievementsModal open={achievementsOpen} onOpenChange={setAchievementsOpen} />
     </div>
   );
 }
