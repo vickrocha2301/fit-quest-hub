@@ -11,6 +11,18 @@ import {
 } from "@/components/ui/dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
+const BADGES = [
+  { name: "Primeiro Passo", icon: "👟", unlocked: true, description: "Complete sua primeira atividade" },
+  { name: "Maratonista", icon: "🏅", unlocked: true, description: "Corra 42km no total" },
+  { name: "Streak Master", icon: "🔥", unlocked: true, description: "7 dias seguidos de treino" },
+  { name: "Velocista", icon: "⚡", unlocked: true, description: "Corra 1km em menos de 5min" },
+  { name: "Explorador", icon: "🗺️", unlocked: true, description: "Treine em 5 locais diferentes" },
+  { name: "Ciclista", icon: "🚴", unlocked: false, description: "Pedale 100km" },
+  { name: "Noturno", icon: "🌙", unlocked: false, description: "Treine depois das 22h" },
+  { name: "Social", icon: "👥", unlocked: false, description: "Adicione 10 amigos" },
+  { name: "Lendário", icon: "🏆", unlocked: false, description: "Alcance o nível 50" },
+];
+
 type NodeStatus = "completed" | "current" | "locked";
 
 interface JourneyNode {
@@ -82,9 +94,11 @@ function buildPath() {
 export default function Journey() {
   const [mode, setMode] = useState<"solo" | "friends">("solo");
   const [selected, setSelected] = useState<JourneyNode | null>(null);
+  const [achievementsOpen, setAchievementsOpen] = useState(false);
 
   const path = useMemo(() => buildPath(), []);
   const positions = useMemo(() => NODES.map((_, i) => getNodePosition(i)), []);
+  const unlockedCount = BADGES.filter((b) => b.unlocked).length;
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-background pb-24">
@@ -166,6 +180,27 @@ export default function Journey() {
           </div>
         </div>
       </header>
+
+      {/* Floating Trophy Button */}
+      <motion.button
+        onClick={() => setAchievementsOpen(true)}
+        initial={{ opacity: 0, scale: 0.6 }}
+        animate={{ opacity: 1, scale: 1 }}
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.92 }}
+        aria-label="Minhas Conquistas"
+        className="fixed top-20 right-4 z-30 w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-br from-gold to-streak shadow-[0_0_24px_hsl(var(--gold)/0.6)] border border-gold/40"
+      >
+        <motion.span
+          className="absolute inset-0 rounded-full bg-gold/30"
+          animate={{ scale: [1, 1.4], opacity: [0.5, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
+        />
+        <Trophy className="w-5 h-5 text-background relative z-10" strokeWidth={2.5} />
+        <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-primary text-primary-foreground text-[10px] font-heading font-bold flex items-center justify-center border border-background z-10">
+          {unlockedCount}
+        </span>
+      </motion.button>
 
       {/* Trail */}
       <main className="relative z-10 max-w-lg mx-auto px-4 pt-6">
@@ -347,6 +382,57 @@ export default function Journey() {
               </div>
             </>
           )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Achievements Modal — Glassmorphism */}
+      <Dialog open={achievementsOpen} onOpenChange={setAchievementsOpen}>
+        <DialogContent className="max-w-md border-white/10 bg-background/40 backdrop-blur-2xl shadow-[0_0_60px_hsl(var(--accent)/0.3)]">
+          <DialogHeader>
+            <DialogTitle className="font-heading text-xl flex items-center gap-2">
+              <Trophy className="w-5 h-5 text-gold drop-shadow-[0_0_8px_hsl(var(--gold)/0.7)]" />
+              Minhas Conquistas
+            </DialogTitle>
+            <DialogDescription>
+              {unlockedCount} de {BADGES.length} medalhas desbloqueadas
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="grid grid-cols-3 gap-3 mt-2 max-h-[60vh] overflow-y-auto pr-1">
+            {BADGES.map((b, i) => (
+              <motion.div
+                key={b.name}
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: i * 0.04 }}
+                className={`relative aspect-square rounded-xl flex flex-col items-center justify-center p-2 border transition-all ${
+                  b.unlocked
+                    ? "bg-gradient-to-br from-primary/20 to-accent/20 border-primary/40 shadow-[0_0_16px_hsl(var(--primary)/0.3)]"
+                    : "bg-secondary/30 border-border"
+                }`}
+              >
+                <span
+                  className={`text-3xl mb-1 transition-all ${
+                    b.unlocked ? "" : "grayscale opacity-40"
+                  }`}
+                >
+                  {b.icon}
+                </span>
+                <span
+                  className={`text-[10px] font-heading font-semibold text-center leading-tight ${
+                    b.unlocked ? "text-foreground" : "text-muted-foreground"
+                  }`}
+                >
+                  {b.name}
+                </span>
+                {!b.unlocked && (
+                  <span className="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-background/70 backdrop-blur flex items-center justify-center border border-border">
+                    <Lock className="w-2.5 h-2.5 text-muted-foreground" />
+                  </span>
+                )}
+              </motion.div>
+            ))}
+          </div>
         </DialogContent>
       </Dialog>
     </div>
