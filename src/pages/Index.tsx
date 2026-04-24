@@ -74,10 +74,10 @@ export default function Home() {
       {/* Header */}
       <motion.div variants={item} className="flex items-center gap-3 mb-4">
         <div className="w-12 h-12 rounded-full gradient-primary flex items-center justify-center text-primary-foreground font-heading font-bold text-lg">
-          S
+          A
         </div>
         <div className="flex-1">
-          <h1 className="text-lg font-heading font-bold">Olá, Sarah! 💪</h1>
+          <h1 className="text-lg font-heading font-bold">Olá, Atleta! 💪</h1>
           <XPBar current={720} max={1000} level={12} />
         </div>
       </motion.div>
