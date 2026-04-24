@@ -14,6 +14,7 @@ import Profile from "./pages/Profile";
 import Social from "./pages/Social";
 import Store from "./pages/Store";
 import Onboarding from "./pages/Onboarding";
+import Journey from "./pages/Journey";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ function AppContent() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/social" element={<Social />} />
         <Route path="/store" element={<Store />} />
+        <Route path="/journey" element={<Journey />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       {!hideNav && <BottomNav />}
