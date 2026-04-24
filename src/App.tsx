@@ -7,7 +7,7 @@ import { BottomNav } from "@/components/BottomNav";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Activity from "./pages/Activity";
-import Achievements from "./pages/Achievements";
+import Habits from "./pages/Habits";
 import Challenges from "./pages/Challenges";
 import Ranking from "./pages/Ranking";
 import Profile from "./pages/Profile";
@@ -30,7 +30,7 @@ function AppContent() {
         <Route path="/" element={<Index />} />
         <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/activity" element={<Activity />} />
-        <Route path="/achievements" element={<Achievements />} />
+        <Route path="/habits" element={<Habits />} />
         <Route path="/challenges" element={<Challenges />} />
         <Route path="/ranking" element={<Ranking />} />
         <Route path="/profile" element={<Profile />} />
