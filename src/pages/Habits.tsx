@@ -1,7 +1,10 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { Check, Droplet, Brain, BookOpen, Plus, Sparkles } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import {
+  RegisterActivityModal,
+  type RegisterCategory,
+} from "@/components/RegisterActivityModal";
 
 const weekDays = [
   { short: "Dom", full: "Domingo" },
@@ -28,10 +31,18 @@ const initialHabits: Habit[] = [
 ];
 
 export default function Habits() {
-  const navigate = useNavigate();
   const todayIndex = new Date().getDay();
   const [selectedDay, setSelectedDay] = useState(todayIndex);
   const [habits, setHabits] = useState<Habit[]>(initialHabits);
+  const [registerOpen, setRegisterOpen] = useState(false);
+  const [initialCategory, setInitialCategory] = useState<
+    RegisterCategory | undefined
+  >(undefined);
+
+  const openRegister = (category?: RegisterCategory) => {
+    setInitialCategory(category);
+    setRegisterOpen(true);
+  };
 
   const toggleHabit = (id: string) => {
     setHabits((prev) => prev.map((h) => (h.id === id ? { ...h, done: !h.done } : h)));
@@ -142,7 +153,7 @@ export default function Habits() {
       {/* Main CTA */}
       <div className="flex flex-col items-center gap-3 mt-10">
         <motion.button
-          onClick={() => navigate("/activity")}
+          onClick={() => openRegister()}
           whileTap={{ scale: 0.95 }}
           whileHover={{ scale: 1.05 }}
           className="relative w-32 h-32 rounded-full gradient-primary flex items-center justify-center shadow-[0_0_40px_hsl(var(--accent)/0.5)] group"
@@ -157,6 +168,12 @@ export default function Habits() {
         <p className="text-sm font-heading font-semibold text-center">Iniciar Nova Atividade</p>
         <p className="text-xs text-muted-foreground text-center -mt-2">Registre seu treino agora</p>
       </div>
+
+      <RegisterActivityModal
+        open={registerOpen}
+        onOpenChange={setRegisterOpen}
+        initialCategory={initialCategory}
+      />
     </div>
   );
 }
