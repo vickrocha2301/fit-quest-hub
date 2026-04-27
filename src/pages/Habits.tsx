@@ -153,7 +153,7 @@ export default function Habits() {
       {/* Main CTA */}
       <div className="flex flex-col items-center gap-3 mt-10">
         <motion.button
-          onClick={() => navigate("/activity")}
+          onClick={() => openRegister()}
           whileTap={{ scale: 0.95 }}
           whileHover={{ scale: 1.05 }}
           className="relative w-32 h-32 rounded-full gradient-primary flex items-center justify-center shadow-[0_0_40px_hsl(var(--accent)/0.5)] group"
@@ -168,6 +168,12 @@ export default function Habits() {
         <p className="text-sm font-heading font-semibold text-center">Iniciar Nova Atividade</p>
         <p className="text-xs text-muted-foreground text-center -mt-2">Registre seu treino agora</p>
       </div>
+
+      <RegisterActivityModal
+        open={registerOpen}
+        onOpenChange={setRegisterOpen}
+        initialCategory={initialCategory}
+      />
     </div>
   );
 }
