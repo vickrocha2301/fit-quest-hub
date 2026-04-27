@@ -31,10 +31,18 @@ const initialHabits: Habit[] = [
 ];
 
 export default function Habits() {
-  const navigate = useNavigate();
   const todayIndex = new Date().getDay();
   const [selectedDay, setSelectedDay] = useState(todayIndex);
   const [habits, setHabits] = useState<Habit[]>(initialHabits);
+  const [registerOpen, setRegisterOpen] = useState(false);
+  const [initialCategory, setInitialCategory] = useState<
+    RegisterCategory | undefined
+  >(undefined);
+
+  const openRegister = (category?: RegisterCategory) => {
+    setInitialCategory(category);
+    setRegisterOpen(true);
+  };
 
   const toggleHabit = (id: string) => {
     setHabits((prev) => prev.map((h) => (h.id === id ? { ...h, done: !h.done } : h)));
