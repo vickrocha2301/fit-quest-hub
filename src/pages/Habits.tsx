@@ -1,7 +1,10 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { Check, Droplet, Brain, BookOpen, Plus, Sparkles } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import {
+  RegisterActivityModal,
+  type RegisterCategory,
+} from "@/components/RegisterActivityModal";
 
 const weekDays = [
   { short: "Dom", full: "Domingo" },
